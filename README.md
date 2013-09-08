@@ -36,6 +36,17 @@ h3 install elasticsearch
 
 dpkg -i
 http://127.0.0.1:9200/
+install plugin:
+/usr/share/elasticsearch$ sudo bin/plugin -install elasticsearch/elasticsearch-river-rabbitmq/1.6.0
+install maven:
+wget http://www.interior-dsgn.com/apache/maven/maven-3/3.1.0/binaries/apache-maven-3.1.0-bin.tar.gz
+cd directory: mvn package
+install xxx --install river-mysql --url file:/// Elasticsearch-MySQL-River/target/releases/rivers-mysql-1.0.0-SNAPSHOT.zip
+sudo wget http://jdbc.postgresql.org/download/postgresql-9.1-903.jdbc4.jar to the jdbcplugin folder
+
+curl -XPUT 'localhost:9200/_river/my_jdbc_river/_meta' -d '{    "type" : "jdbc",    "jdbc" : {        "driver" : "com.mysql.jdbc.Driver",        "url" : "jdbc:mysql://localhost:3306/abs",        "user" : "sinatra",        "password" : "",        "sql" : "select * from books"    },    "index" : {        "index" : "jdbc",        "type" : "jdbc"    } }'
+
+curl -XGET 'localhost:9200/jdbc/jdbc/_search?pretty&q=*'
 
 h3 install sphinxsearch
 
@@ -61,3 +72,7 @@ h3 TODO
 #http://www.bootcss.com/p/buttons/
 
 # use rake to run seed
+
+h3 Thanks to:
+
+https://github.com/jprante/elasticsearch-river-jdbc/wiki/Quickstart

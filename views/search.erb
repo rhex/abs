@@ -1,0 +1,53 @@
+<h2>search</h2>
+<br/>
+<form action="/sql" method="post">
+  <label for="sql_title">Search books by <strong>sql like</strong>:</label>
+  <input id="sphinx_title" name="sql_search" type="text" size="77"/>
+  <br/>
+  <br/>
+  <input type="submit" value="Search!"/>
+</form>
+<form action="/sphinx" method="post">
+  <label for="sphinx_title">Search books by <strong>sphinx</strong>:</label>
+  <!--
+  <input id="sphinx_title" name="book[sphinx_search]" type="text" size="77"/>
+  {book => {sphinx_search => data}}
+  -->
+  <input id="sphinx_title" name="sphinx_search" type="text" size="77"/>
+  <br/>
+  <br/>
+  <input type="submit" value="Search!"/>
+</form>
+<form action="/elastic" method="post">
+  <label for="elastic_title">Search books by <strong>elastic</strong>:</label>
+  <!--
+  <input id="sphinx_title" name="book[sphinx_search]" type="text" size="77"/>
+  {book => {sphinx_search => data}}
+  -->
+  <input id="elastic_title" name="elastic_search" type="text" size="77"/>
+  <br/>
+  <br/>
+  <input type="submit" value="Search!"/>
+</form>
+<% if @search_result %>
+  <h3>search result</h3>
+  <ul> 
+  <% @search_result.each do |book| %>
+    <li>
+      <h4><%= book.title %></h4>
+      <p>body: <%= book.body %></p>
+      <p>price: <%= book.price %></p>
+    </li>
+  <% end %>
+  </ul>
+<% end %>
+<h2>All the books</h2>
+<ul> 
+<% @all_books.each do |book| %>
+  <li>
+    <h4><%= book.title %></h4>
+    <p>body: <%= book.body %></p>
+    <p>price: <%= book.price %></p>
+  </li>
+<% end %>
+</ul>
