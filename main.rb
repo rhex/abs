@@ -3,6 +3,8 @@ require 'sinatra'
 require 'sinatra/activerecord'
 require 'models/book'
 require 'rubberband'
+require 'stretcher'
+require 'sphinx'
 # require 'config/environments'
 # puts "rack env is #{ENV['RACK_ENV']}"
 # ENV['RACK_ENV'] = 'test'
@@ -36,7 +38,20 @@ end
 
 post '/sphinx' do
   puts "#{params.inspect}"
-  @search_result = 'this is sphinx result'
+  sphinx = Sphinx::Client.new
+  # sphinx.set_server 'localhost', 9312
+  # sphinx.set_match_mode Sphinx::SPH_MATCH_ALL
+  # sphinx.set_limits 0, 10**10
+  query = "*#{params['sphinx_search']}*"
+  result = sphinx.query(query)
+  r = []
+  result['matches'].each { |m| r << m['id'] }
+  @search_result =
+    if r.empty?
+      []
+    else
+     Book.find(r) 
+    end
   erb :search
 end
 
@@ -44,5 +59,8 @@ post '/elastic' do
   puts "#{params.inspect}"
   client = ElasticSearch.new('http://127.0.0.1:9200', :index => "jdbc", :type => "jdbc")
   @search_result = client.search("#{params['elastic_search']}")
+  # server = Stretcher::Server.new('http://localhost:9200')
+  # res = server.index(:jdbc).search(size: 12, query: {match_all: {}})
+  # puts res
   erb :search
 end

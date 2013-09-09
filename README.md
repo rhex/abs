@@ -52,6 +52,13 @@ h3 install sphinxsearch
 
 dpkg -i
 
+search --config sphinx.conf "xyz"
+search -c /etc/sphinxsearch/sphinx.conf -q 1
+--noinfo
+sudo indexer abs_index
+sudo indexer --all
+sudo searchd --nodetach
+
 h3 reference
 
 # angularjs
@@ -72,7 +79,16 @@ h3 TODO
 #http://www.bootcss.com/p/buttons/
 
 # use rake to run seed
+# tire
+# stretcher
+# incremental search
+# sphinx rt
 
 h3 Thanks to:
 
 https://github.com/jprante/elasticsearch-river-jdbc/wiki/Quickstart
+http://www.elasticsearch.org/guide/reference/api/admin-indices-create-index/
+http://www.cnblogs.com/MrHiFiy/archive/2012/12/06/2806221.html
+
+
+http://sphinxsearch.com/docs/manual-2.0.9.html
