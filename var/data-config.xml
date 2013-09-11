@@ -1,0 +1,20 @@
+<dataConfig>
+  <dataSource type="JdbcDataSource"
+   driver="com.mysql.jdbc.Driver"
+   url="jdbc:mysql://localhost:3306/abs"
+   user="sinatra"
+   password=""
+   />
+  <document name="documents1" >
+        <entity name="books"
+          query="select id,title,body,price from books"
+          deltaImportQuery="select id,title,body,price from books where id='${dataimporter.delta.id}'"
+          deltaQuery="select id from books where created_at > '${dataimporter.last_index_time}'"
+          deletedPkQuery="select id  from documents where id=0">
+            <field column="id" name="id" />
+            <field column="title" name="title" />
+            <field column="body" name="body" />
+            <field column="price" name="price" />
+        </entity>
+  </document>
+</dataConfig>

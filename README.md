@@ -29,6 +29,40 @@ to install tomcat: chmod +x *.sh
 in bashrc export CATALINA_HOME=$HOME/dev/apache-tomcat-7.0.42
 ./startup.sh
 
+export JAVA_OPTS="-Dsolr.solr.home=/opt/dev/solrindex"
+cp example/solr to tomcat
+
+<Context docBase="/dev/apache-tomcat-7.0.42/webapps/solr" debug="0" crossContext="true" >
+    <Environment name="solr/home" type="java.lang.String" value="/dev/solrindex" override="true" />
+</Context>
+
+move solr.war to webapps
+
+another way manage/html to deploy(first add <user username="tomcat" password="tomcat" roles="manager-gui"/> to tomcat-user.xml)
+
+./solr is the default
+
+# config with jetty
+
+1 add to solrconfig.xml
+
+<requestHandler name="/dataimport" 
+     class="org.apache.solr.handler.dataimport.DataImportHandler">
+    <lst name="defaults">
+      <str name="config">data-config.xml</str>
+    </lst>
+</requestHandler>
+
+2 add data-config.xml to solr/conf
+
+3 config schema.xml, name should be the same as that in data-config.xml
+
+4 Add mysql-connector, solr-dataimporter .. to solr lib folder
+
+http://localhost:8080/solr/dataimport?command=full-import
+
+http://localhost:8983/solr/collection1/select?q=title1&wt=json
+
 A simple way:
 in example:  java -jar start.jar
 
@@ -92,3 +126,16 @@ http://www.cnblogs.com/MrHiFiy/archive/2012/12/06/2806221.html
 
 
 http://sphinxsearch.com/docs/manual-2.0.9.html
+http://www.sphinxsearch.org/sphinx-tutorial
+http://www.coreseek.cn/docs/coreseek_3.2-sphinx_0.9.9.html#sql
+
+http://wiki.apache.org/solr/SolrInstall
+https://cwiki.apache.org/confluence/display/solr/Apache+Solr+Reference+Guide
+http://lucene.apache.org/solr/4_4_0/tutorial.html
+
+
+https://cwiki.apache.org/confluence/display/solr/Running+Solr+on+Tomcat
+http://blog.csdn.net/fover717/article/details/7551867
+http://blog.csdn.net/xzknet/article/details/6710753
+http://wiki.apache.org/solr/FrontPage
+http://wiki.apache.org/solr/DIHQuickStart

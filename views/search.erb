@@ -20,11 +20,14 @@
 </form>
 <form action="/elastic" method="post">
   <label for="elastic_title">Search books by <strong>elastic</strong>:</label>
-  <!--
-  <input id="sphinx_title" name="book[sphinx_search]" type="text" size="77"/>
-  {book => {sphinx_search => data}}
-  -->
   <input id="elastic_title" name="elastic_search" type="text" size="77"/>
+  <br/>
+  <br/>
+  <input type="submit" value="Search!"/>
+</form>
+<form action="/solr" method="post">
+  <label for="solr_title">Search books by <strong>solr</strong>:</label>
+  <input id="solr_title" name="solr_search" type="text" size="77"/>
   <br/>
   <br/>
   <input type="submit" value="Search!"/>
